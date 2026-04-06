@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
   subtituloCustomizado: {
     color: '#000',
     fontSize: 48,
+    fontFamily: 'Itim',
   },
   tituloCustomizado: {
-    color: '#000',
+    color: '#FFC567',
     fontSize: 70,
+    fontFamily: 'MuseoBold',
   },
   centralizar: {
     flex: 1,
