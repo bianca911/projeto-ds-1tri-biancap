@@ -15,24 +15,126 @@ export default function HomeScreen() {
         </ThemedText>
       </View>
 
+      <View style={styles.centralizar2}>
+        <ThemedText style={styles.texto2}>
+          10 resultados encontrados
+        </ThemedText>
+      </View>
+
+
+      <View style={styles.quadrado}>
+        <View style={styles.oquadrado}>
+          <ThemedText style={styles.texto3}>
+            TODOS OS ALUNOS
+
+          </ThemedText>
+        </View>
+      </View>
+
+      <View style={styles.centralizar2}>
+        <ThemedText style={styles.texto4}  >
+          SELECIONE FILTRO
+        </ThemedText>
+
+      </View>
+
+      <View style={styles.quadrado}>
+        <View style={styles.oquadrado}>
+          <ThemedText style={styles.texto5}  >
+            ALUNOS A 
+          </ThemedText>
+        </View>
+      </View>
+
+
+      <View style={styles.quadrado}>
+        <View style={styles.oquadrado}>
+           <ThemedText style={styles.texto5}  >
+            ALUNOS B
+          </ThemedText>
+        </View>
+      </View>
+
+
+      <View style={styles.quadrado}>
+        <View style={styles.oquadrado}>
+           <ThemedText style={styles.texto5}  >
+            ALUNOS C
+          </ThemedText>
+        </View>
+      </View>
+
+      <View style={styles.quadrado}>
+        <View style={styles.oquadrado}>
+           <ThemedText style={styles.texto5}  >
+            ALUNOS D
+          </ThemedText>
+        </View>
+      </View>
+
+
     </ScrollView>
   );
 }
 
+// A tela - OBS: todas as notas são feitas por MIM não uma IA
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
+
+  // Primeiro texto 
   centralizarporra: {
-    flex: 1,                    // Precisa disso!
+    flex: 1,                    // Deixa flexivel, se sobrar espaço na tela ele estica e preenche tudo.
     justifyContent: 'center',   // Centraliza verticalmente
     alignItems: 'center',       // Centraliza horizontalmente
-  
+    marginTop: 20, // ta descendo 
   },
-  texto: {
-    color: '#000000',
-    fontSize: 50,
 
+  texto: {
+    color: '#000',
+    fontSize: 40,
   },
+
+
+  // Segundo texto 
+  centralizar2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  texto2: {
+    color: '#000',
+    fontSize: 20,
+  },
+
+  //quadrados
+  oquadrado: {
+    width: 300,
+    height: 120,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFC567',
+    borderWidth: 2,
+    borderColor: '#000',
+  },
+  quadrado: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  texto3: {
+    color: '#000',
+    fontSize: 25,
+  },
+  texto4: {
+    color: '#000',
+  },
+  texto5: {
+    color: '#000',
+    fontSize: 25,
+  }
 });
