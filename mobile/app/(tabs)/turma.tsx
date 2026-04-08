@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
   texto: {
     color: '#000',
     fontSize: 40,
+    fontFamily: 'Itim',
   },
 
 
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
   texto2: {
     color: '#000',
     fontSize: 20,
+    fontFamily: 'Itim',
   },
 
   //quadrados
@@ -129,12 +131,15 @@ const styles = StyleSheet.create({
   texto3: {
     color: '#000',
     fontSize: 25,
+    fontFamily: 'Itim',
   },
   texto4: {
     color: '#000',
+    fontFamily: 'Itim',
   },
   texto5: {
     color: '#000',
     fontSize: 25,
+    fontFamily: 'Itim',
   }
 });
