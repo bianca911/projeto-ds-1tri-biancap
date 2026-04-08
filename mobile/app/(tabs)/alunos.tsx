@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
   texto: {
     color: '#000000',
     fontSize: 50,
-
+   
+fontFamily:'itim',
   },
 
 contralizarsubtitulo: {
@@ -75,25 +76,27 @@ texto2: {
   gap: 'auto',
  color: '#000000',
     fontSize: 20,
+   fontFamily:'itim',
 },
- //quadrados
-  oquadrado: {
-    width: 300,
-    height: 120,
-    borderRadius: 15,
-    backgroundColor: '#FFC567',
-    borderWidth: 2,
-    borderColor: '#000',
-  },
-  quadrado: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
+//quadrados
+ oquadrado: {
+ width: 300,
+height: 120,
+borderRadius: 15,
+backgroundColor: '#FFC567',
+borderWidth: 2,
+ borderColor: '#000',
+},
+quadrado: {
+ justifyContent: 'center',
+alignItems: 'center',
+marginTop: 10,
+ },
 aluno1: {
  textAlign: 'center',
  marginTop: 40,
  color: '#000000',
     fontSize: 20,
+    fontFamily: 'itim',
 },
 });
