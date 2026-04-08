@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
   },
 
   titulo: {
-
+    color: '#000',
+    fontFamily: 'itim',
   },
 
   quadrado: {
@@ -97,5 +98,7 @@ const styles = StyleSheet.create({
 
   texto: {
       fontSize: 40,
+      color: '#000',
+      fontFamily: 'itim',
   },
 });
