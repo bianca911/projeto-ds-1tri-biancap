@@ -1,9 +1,31 @@
 import React, { useState } from 'react'; // Importado useState
-import { StyleSheet, ScrollView, View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, ScrollView, View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
+import axios from 'axios'; 
 
 export default function HomeScreen() {
   const [credencial, setCredencial] = useState(''); //valor da credencial
+
+  const fazerLogin = async () => {
+      if (!credencial) {
+        Alert.alert("Erro", "Por favor, insira uma credencial.")
+        return;
+      }
+
+      try {
+        const response = await axios.post('http://localhost:8000/Login', {
+          credencial: credencial
+        });
+
+      if (response.data.status === 'sucesso') {
+        Alert.alert("Sucesso", "Acesso liberado para " + response.data.usuario);
+      }
+     } catch (error) {
+      Alert.alert("Erro de acesso", "Credencial inválida ou erro no servidor.");
+    }
+  };
+
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
 
