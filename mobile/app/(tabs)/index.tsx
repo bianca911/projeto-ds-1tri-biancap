@@ -13,7 +13,7 @@ export default function HomeScreen() {
       }
 
       try {
-        const response = await axios.post('http://localhost:8000/Login', {
+        const response = await axios.post('http://localhost:8000/login', {
           credencial: credencial
         });
 
@@ -56,7 +56,7 @@ export default function HomeScreen() {
 
       <TouchableOpacity
         style={styles.botao}
-        onPress={() => console.log('Acessando com:', credencial)}
+        onPress={fazerLogin}
       >
         <Text style={styles.textoBotao}>continuar</Text>
       </TouchableOpacity>
