@@ -1,30 +1,40 @@
 import React, { useState } from 'react'; // Importado useState
 import { StyleSheet, ScrollView, View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
-import axios from 'axios'; 
+import { useRouter } from 'expo-router';
+import axios from 'axios';
 
 export default function HomeScreen() {
+
   const [credencial, setCredencial] = useState(''); //valor da credencial
 
-  const fazerLogin = async () => {
-      if (!credencial) {
-        Alert.alert("Erro", "Por favor, insira uma credencial.")
-        return;
-      }
+  const router = useRouter();
 
-      try {
-        const response = await axios.post('http://localhost:8000/login', {
-          credencial: credencial
-        });
+  const fazerLogin = async () => {
+    if (!credencial) {
+      Alert.alert("Erro", "Por favor, insira uma credencial.");
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://10.222.91.22:8000/login', {
+        credencial: credencial
+      });
 
       if (response.data.status === 'sucesso') {
-        Alert.alert("Sucesso", "Acesso liberado para " + response.data.usuario);
+        // Navega e envia o nome do professor (ex: "Mateus") para a próxima tela
+        router.push({
+          pathname: "/turmas",
+          params: { usuario: response.data.usuario }
+        });
+      } else {
+        Alert.alert("Erro", "Credencial não reconhecida.");
       }
-     } catch (error) {
-      Alert.alert("Erro de acesso", "Credencial inválida ou erro no servidor.");
+    } catch (error) {
+      // Se o servidor estiver desligado, cai aqui
+      Alert.alert("Erro de Conexão", "Não foi possível falar com o servidor.");
     }
   };
-
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -45,7 +55,7 @@ export default function HomeScreen() {
         insira sua credencial de acesso
       </ThemedText>
 
-      
+
       <TextInput
         style={styles.input}
         value={credencial}
@@ -94,13 +104,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
-  
+
   input: {
     width: '90%',
     height: 50,
     borderWidth: 2,
     borderColor: '#000',
-    borderRadius: 20, 
+    borderRadius: 20,
     paddingHorizontal: 20,
     fontSize: 15,
     fontFamily: 'Itim',
