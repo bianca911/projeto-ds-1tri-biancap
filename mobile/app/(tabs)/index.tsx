@@ -1,77 +1,65 @@
-import React, { useState } from 'react'; // Importado useState
-import { StyleSheet, ScrollView, View, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, ScrollView, View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { useRouter } from 'expo-router';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 export default function HomeScreen() {
-
-  const [credencial, setCredencial] = useState(''); //valor da credencial
-
+  const [credencial, setCredencial] = useState('');
   const router = useRouter();
 
   const fazerLogin = async () => {
-    if (!credencial) {
-      Alert.alert("Erro", "Por favor, insira uma credencial.");
-      return;
-    }
 
     try {
-      const response = await axios.post('http://localhost:8081/login', {
+      const response = await axios.post('http://10.222.91.16:8081/login', {
         credencial: credencial
       });
 
       if (response.data.status === 'sucesso') {
-        // Navega e envia o nome do professor (ex: "Mateus") para a próxima tela
         router.push({
           pathname: "/turmas",
           params: { usuario: response.data.usuario }
         });
-      } else {
-        Alert.alert("Erro", "Credencial não reconhecida.");
-      }
+      } 
     } catch (error) {
-      // Se o servidor estiver desligado, cai aqui
-      Alert.alert("Erro de Conexão", "Não foi possível falar com o servidor.");
+      Toast.show({ 
+        type: 'error', text1: 'Erro de Busca',
+        text2: 'Por favor, insira uma credencial válida!' });
     }
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={{ flex: 1}}> // Container para o Toast flutuar
 
-      <View style={styles.centralizar}>
-        <ThemedText type="subtitle" style={styles.subtituloCustomizado}>
-          Colégio
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.centralizar}>
+          <ThemedText type="subtitle" style={styles.subtituloCustomizado}>Colégio</ThemedText>
+        </View>
+
+        <View style={styles.centralizar}>
+          <ThemedText type="title" style={styles.tituloCustomizado}>Luláticos</ThemedText>
+        </View>
+
+        <ThemedText type="subtitle" style={styles.credencialtexto}>
+          insira sua credencial de acesso
         </ThemedText>
-      </View>
 
-      <View style={styles.centralizar}>
-        <ThemedText type="title" style={styles.tituloCustomizado}>
-          Luláticos
-        </ThemedText>
-      </View>
+        <TextInput
+          style={styles.input}
+          value={credencial}
+          onChangeText={(text) => setCredencial(text.replace(/[^0-9]/g, ''))}  //deixar só digitar números
+          keyboardType="numeric"
+          autoCapitalize="none"
+        />
 
-      <ThemedText type="subtitle" style={styles.credencialtexto}>
-        insira sua credencial de acesso
-      </ThemedText>
+        <TouchableOpacity style={styles.botao} onPress={fazerLogin}>
+          <Text style={styles.textoBotao}>continuar</Text>
+        </TouchableOpacity>
+      </ScrollView>
 
-
-      <TextInput
-        style={styles.input}
-        value={credencial}
-        onChangeText={(text) => setCredencial(text.replace(/[^0-9]/g, ''))} //deixar só digitar números
-        keyboardType="numeric"
-        autoCapitalize="none"
-      />
-
-      <TouchableOpacity
-        style={styles.botao}
-        onPress={fazerLogin}
-      >
-        <Text style={styles.textoBotao}>continuar</Text>
-      </TouchableOpacity>
-
-    </ScrollView>
+      <Toast />
+    </View>
   );
 }
 
