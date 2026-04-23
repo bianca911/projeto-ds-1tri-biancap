@@ -17,7 +17,7 @@ export default function HomeScreen() {
     }
 
     try {
-      const response = await axios.post('http://10.222.91.22:8000/login', {
+      const response = await axios.post('http://localhost:8081/login', {
         credencial: credencial
       });
 
