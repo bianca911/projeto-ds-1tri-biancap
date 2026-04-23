@@ -9,22 +9,19 @@ export default function TurmasScreen() {
   return (
     <ScrollView style={styles.container}>
 
-      {/* Cabeçalho com Círculo e Nome do Professor */}
+
       <View style={styles.lugar}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <View style={styles.circulo}></View>
-        </TouchableOpacity>
-       
+        <View style={styles.circulo}></View>
         <View style={{ marginLeft: 15 }}>
           <ThemedText style={styles.nomeProf}>Prof. {usuario || 'Mateus'}</ThemedText>
           <ThemedText style={styles.subProf}>Tecnologia Da Informação</ThemedText>
         </View>
       </View>
-       
+
       <View style={styles.titulolugar}>
         <ThemedText style={styles.titulo}>SELECIONE A TURMA</ThemedText>
       </View>
-     
+
       {/* Turmas com as cores individuais aplicadas via Style Array */}
       <View style={styles.quadrado}>
         <View style={[styles.oquadrado, { backgroundColor: '#FF85A1' }]}>
