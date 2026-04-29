@@ -23,7 +23,7 @@ export default function HomeScreen() {
 
 
       <View style={styles.quadrado}>
-        <View style={styles.oquadrado}>
+        <View style={[styles.oquadrado, { backgroundColor: '#FF85A1'}]}>
           <ThemedText style={styles.texto3}>
             TODOS OS ALUNOS
 
@@ -39,7 +39,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.quadrado}>
-        <View style={styles.oquadrado}>
+        <View style={[styles.oquadrado, { backgroundColor: '#FF85A1'}]}>
           <ThemedText style={styles.texto5}  >
             ALUNOS A 
           </ThemedText>
@@ -48,7 +48,7 @@ export default function HomeScreen() {
 
 
       <View style={styles.quadrado}>
-        <View style={styles.oquadrado}>
+        <View style={[styles.oquadrado, { backgroundColor: '#FFC567'}]}>
            <ThemedText style={styles.texto5}  >
             ALUNOS B
           </ThemedText>
@@ -57,7 +57,7 @@ export default function HomeScreen() {
 
 
       <View style={styles.quadrado}>
-        <View style={styles.oquadrado}>
+        <View style={[styles.oquadrado, { backgroundColor: '#00965F'}]}>
            <ThemedText style={styles.texto5}  >
             ALUNOS C
           </ThemedText>
@@ -65,7 +65,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.quadrado}>
-        <View style={styles.oquadrado}>
+        <View style={[styles.oquadrado, { backgroundColor: '#008AD7'}]}>
            <ThemedText style={styles.texto5}  >
             ALUNOS D
           </ThemedText>
@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFC567',
     borderWidth: 2,
     borderColor: '#000',
   },
