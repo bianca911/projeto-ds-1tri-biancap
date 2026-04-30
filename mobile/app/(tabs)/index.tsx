@@ -30,7 +30,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={{ flex: 1}}> // Container para o Toast flutuar
+    <View style={{ flex: 1}}> 
 
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.centralizar}>
