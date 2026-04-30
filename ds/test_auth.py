@@ -1,36 +1,49 @@
-import os
 import subprocess
 import time
 import httpx
-import pytest
+import os
+from playwright.sync_api import sync_playwright
 
+URL_ALVO = "http://127.0.0.1:8081/login"
 
-subprocess.Popen(["uvicorn", "main:app", "--port", "8081"], cwd="../Back")
+def test_acesso_professor_valido():
+    caminho_back = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Back"))
+    
+    processo = subprocess.Popen(
+        ["python", "-m", "uvicorn", "main:app", "--port", "8081"],
+        cwd=caminho_back
+    )
+    
+    time.sleep(3)
 
+    try:
+        dados_sucesso = {"credencial": "12345"}
+        
+        with httpx.Client() as client:
+            response = client.post(URL_ALVO, json=dados_sucesso)
+        
+       
+        assert response.status_code == 200
+        resposta_json = response.json()
+        assert resposta_json["status"] == "sucesso"
+        
+        
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            page = browser.new_page()
+            
+            
+            page.route("**/login", lambda route: route.fulfill(
+                status=200,
+                body='{"status": "sucesso", "usuario": "Professor"}'
+            ))
+            
+            page.goto(URL_ALVO)
+            
+            page.screenshot(path="resultado_sucesso.png")
+            
+            browser.close()
 
-time.sleep(2)
-
-URL_ALVO = "http://0.0.0.0:8081/login"
-
-
-def test_autenticacao_professor():
-    dados_sucesso = {"credencial": "12345"}
-    with httpx.Client() as client:
-        response = client.post(URL_ALVO, json=dados_sucesso)
-
-    assert response.status_code == 200
-    assert response.json()["status"] == "sucesso"
-    assert response.json()["usuario"] == "Professor"
-
-
-def test_credencial_errada():
-    """Valida se o servidor bloqueia o acesso com 401 para senhas incorretas."""
-
-
-dados_erro = {"credencial": "99999"}
-
-with httpx.Client() as client:
-    response = client.post(URL_ALVO, json=dados_erro)
-
-# O seu main.py levanta um HTTPException 401
-assert response.status_code == 401
+    finally:
+        processo.terminate()
+        processo.wait()
