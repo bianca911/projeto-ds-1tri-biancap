@@ -22,29 +22,38 @@ export default function TurmasScreen() {
         <ThemedText style={styles.titulo}>SELECIONE A TURMA</ThemedText>
       </View>
 
-      {/* Turmas com as cores individuais aplicadas via Style Array */}
+      
       <View style={styles.quadrado}>
-        <View style={[styles.oquadrado, { backgroundColor: '#FF85A1' }]}>
+        <TouchableOpacity onPress={() => router.push('/turma')}>
+         <View style={[styles.oquadrado, { backgroundColor: '#FF85A1' }]}>
           <ThemedText style={styles.texto}>3°A</ThemedText>
-        </View>
+         </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.quadrado}>
+        <TouchableOpacity   onPress={() => router.push('/turma')}>
         <View style={[styles.oquadrado, { backgroundColor: '#FFC567' }]}>
           <ThemedText style={styles.texto}>3°B</ThemedText>
         </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.quadrado}>
+        <TouchableOpacity  onPress={() => router.push('/turma')}>
         <View style={[styles.oquadrado, { backgroundColor: '#00965F' }]}>
           <ThemedText style={styles.texto}>3°C</ThemedText>
         </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.quadrado}>
+        <TouchableOpacity  onPress={() => router.push('/turma')}>
         <View style={[styles.oquadrado, { backgroundColor: '#008AD7' }]}>
           <ThemedText style={styles.texto}>3°D</ThemedText>
         </View>
+
+        </TouchableOpacity>
       </View>
 
     </ScrollView>
