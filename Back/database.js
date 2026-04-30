@@ -1,40 +1,33 @@
-const db = {
-    alunos: [
-        { id: 1, nome: "Allan", id_turma: "A" },
-        { id: 2, nome: "Bianca", id_turma: "A" },
-        { id: 3, nome: "Giovanna", id_turma: "B" },
-        { id: 4, nome: "Maykon", id_turma: "B" }
-    ],
-    faltas: [
-        {id_aluno: 2, data: "2026-04-06", status: "Falta" }
-    ],
-     professores: [
-    { 
-        id: 1, 
-        nome: "Mateus", 
-        materia: "Backend", 
-        senha: "123" // Esta é a senha que o teste vai usar [cite: 53]
-    }
-  ],
+// database.js
 
-  // Estrutura para o UC002 - Consultar alunos por turma [cite: 58, 62]
-  turmas: [
-    { id: 101, nome: "9º Ano A" },
-    { id: 102, nome: "1º Ano B" }
-  ],
+const database = {
+  // Dados do professor conforme o print (Prof. Mateus - TI)
+  professor_logado: {
+    nome: "Prof. Mateus",
+    materia: "Tecnologia Da Informação" // [cite: 20]
+  },
 
-  // UC002 - Alunos para busca por ordem alfabética [cite: 58, 60]
+  // Lista de alunos da turma 3°A
+  // Adicionei nomes com iniciais diferentes para testar seu sistema de busca [cite: 30, 64]
   alunos: [
-    { id: 1, nome: "Allan", id_turma: 101 },
-    { id: 2, nome: "Bianca", id_turma: 101 },
-    { id: 3, nome: "Giovanna", id_turma: 102 },
-    { id: 4, nome: "Maykon", id_turma: 102 }
+    { id: 1, nome: "Allan Cordeiro", id_turma: "3A" },
+    { id: 2, nome: "Christopher de Jesus", id_turma: "3A" },
+    { id: 3, nome: "Bianca Moreira", id_turma: "3A" },
+    { id: 4, nome: "Maykon da Costa", id_turma: "3A" },
+    { id: 5, nome: "Giovanna Gabrielly", id_turma: "3A" }
   ],
 
-  // UC003 - Histórico de faltas e presenças [cite: 68, 70]
-  faltas_presencas: [
-    { id: 1, id_aluno: 1, data: "2026-04-06", status: "Falta" },
-    { id: 2, id_aluno: 2, data: "2026-04-06", status: "Presença" }
+  // Registro de Faltas e Presenças (Obrigatório para UC003) [cite: 68, 70]
+  // id_tipo: 1 para Presença, 0 para Falta [cite: 22, 23]
+  registros: [
+    // Histórico do aluno 1 (Allan)
+    { id_aluno: 1, data: "2026-04-27", status: "Presença", id_tipo: 1 },
+    { id_aluno: 1, data: "2026-04-28", status: "Falta", id_tipo: 0 },
+   
+    // Histórico da aluna 3 (Bianca)
+    { id_aluno: 3, data: "2026-04-27", status: "Presença", id_tipo: 1 },
+    { id_aluno: 3, data: "2026-04-28", status: "Presença", id_tipo: 1 }
   ]
 };
-module.exports = db;
+
+module.exports = database;

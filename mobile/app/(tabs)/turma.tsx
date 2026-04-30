@@ -1,14 +1,25 @@
-import { Platform, StyleSheet, ScrollView } from 'react-native';
+import { Platform, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { HelloWave } from '@/components/hello-wave';
 import { View } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router'; // 1. Adicione useRouter aqui
 
 export default function HomeScreen() {
+  // 2. Inicialize o router
+  const router = useRouter();
+
+  // Função que será executada ao clicar em um quadrado
+  const handlePress = (opcao: string) => {
+    console.log(`Você clicou em: ${opcao}`);
+    
+    // 3. Exemplo de uso do router para navegar para outra tela
+    // Certifique-se de que o arquivo "sua-outra-tela.js" exista na pasta app/
+    router.push('/(tabs)/alunos'); 
+  };
+
   return (
     <ScrollView style={styles.container}>
-
       <View style={styles.centralizarporra}>
         <ThemedText style={styles.texto}>
           3°A
@@ -21,85 +32,97 @@ export default function HomeScreen() {
         </ThemedText>
       </View>
 
-
-      <View style={styles.quadrado}>
+      {/* Primeiro Quadrado Clicável */}
+      <TouchableOpacity 
+        style={styles.quadrado} 
+        activeOpacity={0.7} 
+        onPress={() => handlePress('TODOS OS ALUNOS')}
+      >
         <View style={[styles.oquadrado, { backgroundColor: '#FF85A1'}]}>
           <ThemedText style={styles.texto3}>
             TODOS OS ALUNOS
-
           </ThemedText>
         </View>
-      </View>
+      </TouchableOpacity>
 
       <View style={styles.centralizar2}>
-        <ThemedText style={styles.texto4}  >
+        <ThemedText style={styles.texto4}>
           SELECIONE FILTRO
         </ThemedText>
-
       </View>
 
-      <View style={styles.quadrado}>
+      {/* Quadrado dos Alunos A */}
+      <TouchableOpacity 
+        style={styles.quadrado} 
+        activeOpacity={0.7} 
+        onPress={() => handlePress('ALUNOS A')}
+      >
         <View style={[styles.oquadrado, { backgroundColor: '#FF85A1'}]}>
-          <ThemedText style={styles.texto5}  >
+          <ThemedText style={styles.texto5}>
             ALUNOS A 
           </ThemedText>
         </View>
-      </View>
+      </TouchableOpacity>
 
-
-      <View style={styles.quadrado}>
+      {/* Quadrado dos Alunos B */}
+      <TouchableOpacity 
+        style={styles.quadrado} 
+        activeOpacity={0.7} 
+        onPress={() => handlePress('ALUNOS B')}
+      >
         <View style={[styles.oquadrado, { backgroundColor: '#FFC567'}]}>
-           <ThemedText style={styles.texto5}  >
+           <ThemedText style={styles.texto5}>
             ALUNOS B
           </ThemedText>
         </View>
-      </View>
+      </TouchableOpacity>
 
-
-      <View style={styles.quadrado}>
+      {/* Quadrado dos Alunos C */}
+      <TouchableOpacity 
+        style={styles.quadrado} 
+        activeOpacity={0.7} 
+        onPress={() => handlePress('ALUNOS C')}
+      >
         <View style={[styles.oquadrado, { backgroundColor: '#00965F'}]}>
-           <ThemedText style={styles.texto5}  >
+           <ThemedText style={styles.texto5}>
             ALUNOS C
           </ThemedText>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      <View style={styles.quadrado}>
+      {/* Quadrado dos Alunos D */}
+      <TouchableOpacity 
+        style={styles.quadrado} 
+        activeOpacity={0.7} 
+        onPress={() => handlePress('ALUNOS D')}
+      >
         <View style={[styles.oquadrado, { backgroundColor: '#008AD7'}]}>
-           <ThemedText style={styles.texto5}  >
+           <ThemedText style={styles.texto5}>
             ALUNOS D
           </ThemedText>
         </View>
-      </View>
-
+      </TouchableOpacity>
 
     </ScrollView>
   );
 }
 
-// A tela - OBS: todas as notas são feitas por MIM não uma IA
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-
-  // Primeiro texto 
   centralizarporra: {
-    flex: 1,                    // Deixa flexivel, se sobrar espaço na tela ele estica e preenche tudo.
-    justifyContent: 'center',   // Centraliza verticalmente
-    alignItems: 'center',       // Centraliza horizontalmente
-    marginTop: 20, // ta descendo 
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
   },
-
   texto: {
     color: '#000',
     fontSize: 40,
     fontFamily: 'Itim',
   },
-
-
-  // Segundo texto 
   centralizar2: {
     flex: 1,
     justifyContent: 'center',
@@ -111,8 +134,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Itim',
   },
-
-  //quadrados
   oquadrado: {
     width: 300,
     height: 120,
