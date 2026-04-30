@@ -11,10 +11,10 @@ const database = {
   // Adicionei nomes com iniciais diferentes para testar seu sistema de busca [cite: 30, 64]
   alunos: [
     { id: 1, nome: "Allan Cordeiro", id_turma: "3A" },
-    { id: 2, nome: "Christopher de Jesus", id_turma: "3A" },
-    { id: 3, nome: "Bianca Moreira", id_turma: "3A" },
-    { id: 4, nome: "Maykon da Costa", id_turma: "3A" },
-    { id: 5, nome: "Giovanna Gabrielly", id_turma: "3A" }
+    { id: 2, nome: "Bianca Moreira", id_turma: "3A" },
+    { id: 3, nome: "Christopher Whaither", id_turma: "3A" },
+    { id: 4, nome: "Giovanna Gabrielly", id_turma: "3A" },
+    { id: 5, nome: "Maykon da Costa", id_turma: "3A" }
   ],
 
   // Registro de Faltas e Presenças (Obrigatório para UC003) [cite: 68, 70]

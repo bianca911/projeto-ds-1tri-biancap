@@ -1,12 +1,14 @@
+// aluno.js
 const db = require('./database.js');
 
-function obterFrequenciaAluno(idAluno) {
-    const totalAulas = db.registros.filter(r => r.id_aluno === idAluno).length;
-    const presencas = db.registros.filter(r => r.id_aluno === idAluno && r.id_tipo === 1).length;
-   
-    if (totalAulas === 0) return "0%";
-    return ((presencas / totalAulas) * 100).toFixed(0) + "%";
+function obterAlunosTurma3A() {
+// Filtra apenas os alunos da turma 3A
+const alunos3A = db.alunos.filter(aluno => aluno.id_turma === "3A");
+
+// Organiza a lista em ordem alfabética (A-Z)
+alunos3A.sort((a, b) => a.nome.localeCompare(b.nome));
+
+return alunos3A;
 }
 
-// Teste para o Allan (ID 1)
-console.log("Frequência do Allan:", obterFrequenciaAluno(1));
+module.exports = { obterAlunosTurma3A };
