@@ -1,44 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter } from 'expo-router';
+
+interface Aluno {
+  id: number;
+  nome: string;
+  id_turma: string;
+}
 
 export default function TurmaScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams();
 
-  const [alunosExibidos, setAlunosExibidos] = useState<any[]>([]);
-  const [totalAlunos, setTotalAlunos] = useState(0);
+  const [todosAlunosBase, setTodosAlunosBase] = useState<Aluno[]>([]);
+  const [totalAlunos, setTotalAlunos] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Armazena qual letra/filtro está ativo no momento ('A', 'B', 'C', 'D' ou null para mostrar todos os botões)
+  const [filtroAtivo, setFiltroAtivo] = useState<string | null>(null);
 
   useEffect(() => {
-    // Importa o banco diretamente da pasta Back
-    const db = require('../../Back/database.js');
-   
-    const todosDaTurma = db.alunos.filter((aluno: any) => aluno.id_turma === "3A");
-   
-    setTotalAlunos(todosDaTurma.length);
-    setAlunosExibidos(todosDaTurma.sort((a: any, b: any) => a.nome.localeCompare(b.nome)));
+    async function carregarDados() {
+      try {
+        // Conexão com o backend utilizando Express
+        const response = await fetch('http://localhost:3000/api/alunos/3A');
+        const data = await response.json();
+
+        setTodosAlunosBase(data);
+        setTotalAlunos(data.length);
+      } catch (error) {
+        console.error("Erro ao conectar ao servidor:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    carregarDados();
   }, []);
 
-  const filtrarPorLetra = (letra: string) => {
-    const db = require('../../Back/database.js');
-    const todosDaTurma = db.alunos.filter((aluno: any) => aluno.id_turma === "3A");
-   
-    if (letra === 'TODOS') {
-      setAlunosExibidos(todosDaTurma.sort((a: any, b: any) => a.nome.localeCompare(b.nome)));
-    } else {
-      const filtrados = todosDaTurma.filter((aluno: any) =>
-        aluno.nome.toUpperCase().startsWith(letra)
-      );
-      setAlunosExibidos(filtrados.sort((a: any, b: any) => a.nome.localeCompare(b.nome)));
-    }
+  // Função para filtrar os alunos com base na letra escolhida
+  const filtrarPorLetra = (letra: string | null) => {
+    setFiltroAtivo(letra);
   };
 
-  // Correção da função de clique
   const handlePress = (nomeAluno: string) => {
     console.log(`Você clicou em: ${nomeAluno}`);
     router.push('/alunos');
   };
+
+  // Obtém a lista filtrada de acordo com o estado atual
+  const alunosExibidos = filtroAtivo
+    ? todosAlunosBase
+        .filter(aluno => aluno.nome.toUpperCase().startsWith(filtroAtivo))
+        .sort((a, b) => a.nome.localeCompare(b.nome))
+    : [];
 
   return (
     <ScrollView style={styles.container}>
@@ -54,86 +69,91 @@ export default function TurmaScreen() {
         </ThemedText>
       </View>
 
-      <TouchableOpacity
-        style={styles.quadrado}
-        activeOpacity={0.7}
-        onPress={() => filtrarPorLetra('TODOS')}
-      >
-        <View style={[styles.oquadrado, { backgroundColor: '#FF85A1'}]}>
-          <ThemedText style={styles.texto3}>
-            TODOS OS ALUNOS
-          </ThemedText>
-        </View>
-      </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <View style={{ marginTop: 20, marginBottom: 40 }}>
+         
+          {/* Se nenhum filtro estiver ativo, mostra todos os botões de categorias */}
+          {filtroAtivo === null && (
+            <>
+              <TouchableOpacity
+                style={styles.quadrado}
+                activeOpacity={0.7}
+                onPress={() => filtrarPorLetra('A')}
+              >
+                <View style={[styles.oquadrado, { backgroundColor: '#FF85A1' }]}>
+                  <ThemedText style={styles.texto5}>ALUNOS A</ThemedText>
+                </View>
+              </TouchableOpacity>
 
-      <View style={styles.centralizar2}>
-        <ThemedText style={styles.texto4}>
-          SELECIONE FILTRO
-        </ThemedText>
-      </View>
+              <TouchableOpacity
+                style={styles.quadrado}
+                activeOpacity={0.7}
+                onPress={() => filtrarPorLetra('B')}
+              >
+                <View style={[styles.oquadrado, { backgroundColor: '#FFC567' }]}>
+                  <ThemedText style={styles.texto5}>ALUNOS B</ThemedText>
+                </View>
+              </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.quadrado}
-        activeOpacity={0.7}
-        onPress={() => filtrarPorLetra('A')}
-      >
-        <View style={[styles.oquadrado, { backgroundColor: '#FF85A1'}]}>
-          <ThemedText style={styles.texto5}>
-            ALUNOS A
-          </ThemedText>
-        </View>
-      </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.quadrado}
+                activeOpacity={0.7}
+                onPress={() => filtrarPorLetra('C')}
+              >
+                <View style={[styles.oquadrado, { backgroundColor: '#00965F' }]}>
+                  <ThemedText style={styles.texto5}>ALUNOS C</ThemedText>
+                </View>
+              </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.quadrado}
-        activeOpacity={0.7}
-        onPress={() => filtrarPorLetra('B')}
-      >
-        <View style={[styles.oquadrado, { backgroundColor: '#FFC567'}]}>
-           <ThemedText style={styles.texto5}>
-            ALUNOS B
-          </ThemedText>
-        </View>
-      </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.quadrado}
+                activeOpacity={0.7}
+                onPress={() => filtrarPorLetra('D')}
+              >
+                <View style={[styles.oquadrado, { backgroundColor: '#008AD7' }]}>
+                  <ThemedText style={styles.texto5}>ALUNOS D</ThemedText>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
 
-      <TouchableOpacity
-        style={styles.quadrado}
-        activeOpacity={0.7}
-        onPress={() => filtrarPorLetra('C')}
-      >
-        <View style={[styles.oquadrado, { backgroundColor: '#00965F'}]}>
-           <ThemedText style={styles.texto5}>
-            ALUNOS C
-          </ThemedText>
-        </View>
-      </TouchableOpacity>
+          {/* Se um filtro estiver ativo, mostra apenas o botão correspondente e os itens dentro dele */}
+          {filtroAtivo !== null && (
+            <View style={styles.containerFiltroAtivo}>
+              {/* Botão de voltar para a tela inicial dos botões */}
+              <TouchableOpacity
+                style={[styles.botaoVoltar, { backgroundColor: '#', marginBottom: 20 }]}
+                onPress={() => filtrarPorLetra(null)}
+              >
+                <ThemedText style={styles.texto3}>← Voltar</ThemedText>
+              </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.quadrado}
-        activeOpacity={0.7}
-        onPress={() => filtrarPorLetra('D')}
-      >
-        <View style={[styles.oquadrado, { backgroundColor: '#008AD7'}]}>
-           <ThemedText style={styles.texto5}>
-            ALUNOS D
-          </ThemedText>
-        </View>
-      </TouchableOpacity>
+              <View style={[styles.oquadrado, { backgroundColor: filtroAtivo === 'A' ? '#FF85A1' : filtroAtivo === 'B' ? '#FFC567' : filtroAtivo === 'C' ? '#00965F' : '#008AD7', height: 'auto', paddingVertical: 20 }]}>
+                <ThemedText style={styles.texto5}>ALUNOS {filtroAtivo}</ThemedText>
 
-      <View style={{ marginTop: 30, marginBottom: 40 }}>
-        {alunosExibidos.map((aluno: any) => (
-          <TouchableOpacity
-            key={aluno.id}
-            style={styles.quadrado}
-            activeOpacity={0.7}
-            onPress={() => handlePress(aluno.nome)}
-          >
-            <View style={[styles.oquadrado, { backgroundColor: '#E0E0E0', height: 80 }]}>
-              <ThemedText style={styles.texto3}>{aluno.nome}</ThemedText>
+                {/* Lista os alunos dentro do botão correspondente */}
+                <View style={styles.listaAlunosContainer}>
+                  {alunosExibidos.length > 0 ? (
+                    alunosExibidos.map(aluno => (
+                      <TouchableOpacity
+                        key={aluno.id}
+                        style={styles.itemAluno}
+                        onPress={() => handlePress(aluno.nome)}
+                      >
+                        <ThemedText style={styles.texto3}>{aluno.nome}</ThemedText>
+                      </TouchableOpacity>
+                    ))
+                  ) : (
+                    <ThemedText style={styles.texto3}>Nenhum aluno encontrado.</ThemedText>
+                  )}
+                </View>
+              </View>
             </View>
-          </TouchableOpacity>
-        ))}
-      </View>
+          )}
+        </View>
+      )}
     </ScrollView>
   );
 }
@@ -167,12 +187,13 @@ const styles = StyleSheet.create({
   },
   oquadrado: {
     width: 300,
-    height: 120,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: '#000',
+    paddingVertical: 30,
+    height: 120,
   },
   quadrado: {
     justifyContent: 'center',
@@ -181,19 +202,38 @@ const styles = StyleSheet.create({
   },
   texto3: {
     color: '#000',
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: 'Itim',
     textAlign: 'center',
-  },
-  texto4: {
-    color: '#000',
-    fontFamily: 'Itim',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   texto5: {
     color: '#000',
     fontSize: 25,
     fontFamily: 'Itim',
+  },
+  containerFiltroAtivo: {
+    alignItems: 'center',
+  },
+  botaoVoltar: {
+    padding: 10,
+    borderRadius: 8,
+    width: 200,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  listaAlunosContainer: {
+    marginTop: 15,
+    width: '100%',
+    paddingHorizontal: 15,
+  },
+  itemAluno: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    marginVertical: 4,
+    borderRadius: 10,
+    borderColor: '#333',
+    borderWidth: 1,
+    width: '100%',
   }
 });
