@@ -34,9 +34,30 @@ export default function TurmaScreen() {
         setLoading(false);
       }
     }
-
+  
     carregarDados();
   }, []);
+
+  useEffect(() => {
+    async function carregarDados() {
+      try {
+        // Conexão com o backend utilizando Express
+        const response = await fetch('http://localhost:3000/api/alunos/3B');
+        const data = await response.json();
+
+        setTodosAlunosBase(data);
+        setTotalAlunos(data.length);
+      } catch (error) {
+        console.error("Erro ao conectar ao servidor:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  
+    carregarDados();
+  }, []);
+
+  
 
   // Função para filtrar os alunos com base na letra escolhida
   const filtrarPorLetra = (letra: string | null) => {

@@ -27,6 +27,14 @@ const database = {
     // Histórico da aluna 3 (Bianca)
     { id_aluno: 3, data: "2026-04-27", status: "Presença", id_tipo: 1 },
     { id_aluno: 3, data: "2026-04-28", status: "Presença", id_tipo: 1 }
+  ],
+
+  alunos: [
+    { id: 6, nome: "Malévola Menezes", id_turma: "3B" },
+    { id: 7, nome: "Soso Careca", id_turma: "3B" },
+    { id: 8, nome: "Mc Paiva", id_turma: "3B" },
+    { id: 9, nome: "Rayanne Puglyesi", id_turma: "3B" },
+    { id: 10, nome: "Little Toddy", id_turma: "3B" }
   ]
 };
 

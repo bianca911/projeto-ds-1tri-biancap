@@ -18,6 +18,18 @@ alunos3A.sort((a, b) => a.nome.localeCompare(b.nome));
 res.json(alunos3A);
 });
 
+// Rota para servir os alunos da turma 3B
+app.use('/api/alunos/3B', (req, res) => {
+const alunos3B = db.alunos.filter(aluno => aluno.id_turma === "3B");
+
+// Ordena alfabeticamente
+alunos3A.sort((a, b) => a.nome.localeCompare(b.nome));
+
+res.json(alunos3B);
+});
+
+
+
 app.listen(PORT, () => {
 console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
