@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'itim',
     color: '#000',
-    fontWeight: 'bold',
+    
   },
   subProf: {
     fontSize: 12,
