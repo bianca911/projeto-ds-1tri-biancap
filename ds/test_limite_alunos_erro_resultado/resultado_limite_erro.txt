@@ -1,0 +1,9 @@
+Relatório de Erro: Turma 3A
+Quantidade atual de alunos: 8
+Limite permitido: 5
+Status: ERRO - A quantidade de alunos excedeu o limite permitido.
+
+Relatório de Erro: Turma 3B
+Quantidade atual de alunos: 7
+Limite permitido: 5
+Status: ERRO - A quantidade de alunos excedeu o limite permitido.

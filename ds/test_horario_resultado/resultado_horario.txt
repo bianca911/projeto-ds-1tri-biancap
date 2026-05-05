@@ -1,0 +1,2 @@
+Hora do teste: 07:59:07
+Status: SUCESSO: Acesso permitido dentro do horário escolar!

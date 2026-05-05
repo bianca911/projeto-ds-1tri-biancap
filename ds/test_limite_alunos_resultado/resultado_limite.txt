@@ -1,0 +1,9 @@
+Relatório de Validação: Turma 3A
+Quantidade atual de alunos: 5
+Limite permitido: 5
+Status: SUCESSO - Quantidade dentro do limite permitido.
+
+Relatório de Validação: Turma 3B
+Quantidade atual de alunos: 4
+Limite permitido: 5
+Status: SUCESSO - Quantidade dentro do limite permitido.
