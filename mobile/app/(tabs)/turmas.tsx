@@ -1,15 +1,21 @@
 import { Platform, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
-import { useLocalSearchParams, useRouter } from 'expo-router'; // Importações necessárias
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 export default function TurmasScreen() {
-  const { usuario } = useLocalSearchParams(); // Captura o nome vindo do login
+  const { usuario } = useLocalSearchParams(); 
   const router = useRouter();
+
+  // Função para navegar passando a turma como parâmetro
+  const irParaTurma = (turmaNome: string) => {
+    router.push({
+      pathname: '/(tabs)/turma',
+      params: { turma: turmaNome }
+    });
+  };
 
   return (
     <ScrollView style={styles.container}>
-
-
       <View style={styles.lugar}>
         <View style={styles.circulo}></View>
         <View style={{ marginLeft: 15 }}>
@@ -22,37 +28,39 @@ export default function TurmasScreen() {
         <ThemedText style={styles.titulo}>SELECIONE A TURMA</ThemedText>
       </View>
 
-      
+      {/* Botão 3°A */}
       <View style={styles.quadrado}>
-        <TouchableOpacity onPress={() => router.push('/turma')}>
-         <View style={[styles.oquadrado, { backgroundColor: '#FF85A1' }]}>
-          <ThemedText style={styles.texto}>3°A</ThemedText>
-         </View>
+        <TouchableOpacity onPress={() => irParaTurma('3A')}>
+          <View style={[styles.oquadrado, { backgroundColor: '#FF85A1' }]}>
+            <ThemedText style={styles.texto}>3°A</ThemedText>
+          </View>
         </TouchableOpacity>
       </View>
 
+      {/* Botão 3°B */}
       <View style={styles.quadrado}>
-        <TouchableOpacity   onPress={() => router.push('/turma')}>
-        <View style={[styles.oquadrado, { backgroundColor: '#FFC567' }]}>
-          <ThemedText style={styles.texto}>3°B</ThemedText>
-        </View>
+        <TouchableOpacity onPress={() => irParaTurma('3B')}>
+          <View style={[styles.oquadrado, { backgroundColor: '#FFC567' }]}>
+            <ThemedText style={styles.texto}>3°B</ThemedText>
+          </View>
         </TouchableOpacity>
       </View>
 
+      {/* Botão 3°C */}
       <View style={styles.quadrado}>
-        <TouchableOpacity  onPress={() => router.push('/turma')}>
-        <View style={[styles.oquadrado, { backgroundColor: '#00965F' }]}>
-          <ThemedText style={styles.texto}>3°C</ThemedText>
-        </View>
+        <TouchableOpacity onPress={() => irParaTurma('3C')}>
+          <View style={[styles.oquadrado, { backgroundColor: '#00965F' }]}>
+            <ThemedText style={styles.texto}>3°C</ThemedText>
+          </View>
         </TouchableOpacity>
       </View>
 
+      {/* Botão 3°D */}
       <View style={styles.quadrado}>
-        <TouchableOpacity  onPress={() => router.push('/turma')}>
-        <View style={[styles.oquadrado, { backgroundColor: '#008AD7' }]}>
-          <ThemedText style={styles.texto}>3°D</ThemedText>
-        </View>
-
+        <TouchableOpacity onPress={() => irParaTurma('3D')}>
+          <View style={[styles.oquadrado, { backgroundColor: '#008AD7' }]}>
+            <ThemedText style={styles.texto}>3°D</ThemedText>
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -68,10 +76,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: 20,
-    marginTop: 40, // Aumentado para não ficar colado no topo do celular
+    marginTop: 40,
   },
   circulo: {
-    width: 60, // Ajustado levemente para caber melhor o design
+    width: 60,
     height: 60,
     borderRadius: 30,
     backgroundColor: '#FD5A46',
