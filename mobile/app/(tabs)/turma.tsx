@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
 interface Aluno {
   id: number;
@@ -11,6 +11,10 @@ interface Aluno {
 
 export default function TurmaScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams();
+
+  // Pega qual turma foi selecionada (ex: '3B', '3C'), se não vier nada, assume '3A'
+  const turmaSelecionada = params.turma || '3A';
 
   const [todosAlunosBase, setTodosAlunosBase] = useState<Aluno[]>([]);
   const [totalAlunos, setTotalAlunos] = useState<number>(0);
@@ -23,7 +27,7 @@ export default function TurmaScreen() {
     async function carregarDados() {
       try {
         // Conexão com o backend utilizando Express
-        const response = await fetch('http://localhost:3000/api/alunos/3A');
+        const response = await fetch(`http://localhost:3000/api/alunos/${turmaSelecionada}`);
         const data = await response.json();
 
         setTodosAlunosBase(data);
@@ -34,30 +38,9 @@ export default function TurmaScreen() {
         setLoading(false);
       }
     }
-  
+
     carregarDados();
-  }, []);
-
-  useEffect(() => {
-    async function carregarDados() {
-      try {
-        // Conexão com o backend utilizando Express
-        const response = await fetch('http://localhost:3000/api/alunos/3B');
-        const data = await response.json();
-
-        setTodosAlunosBase(data);
-        setTotalAlunos(data.length);
-      } catch (error) {
-        console.error("Erro ao conectar ao servidor:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  
-    carregarDados();
-  }, []);
-
-  
+  }, [turmaSelecionada]);
 
   // Função para filtrar os alunos com base na letra escolhida
   const filtrarPorLetra = (letra: string | null) => {
@@ -80,7 +63,7 @@ export default function TurmaScreen() {
     <ScrollView style={styles.container}>
       <View style={styles.centralizarporra}>
         <ThemedText style={styles.texto}>
-          3°A
+          {turmaSelecionada}
         </ThemedText>
       </View>
 
@@ -143,9 +126,10 @@ export default function TurmaScreen() {
           {/* Se um filtro estiver ativo, mostra apenas o botão correspondente e os itens dentro dele */}
           {filtroAtivo !== null && (
             <View style={styles.containerFiltroAtivo}>
+             
               {/* Botão de voltar para a tela inicial dos botões */}
               <TouchableOpacity
-                style={[styles.botaoVoltar, { backgroundColor: '#', marginBottom: 20 }]}
+                style={[styles.botaoVoltar, { backgroundColor: '#e0e0e0', marginBottom: 20 }]}
                 onPress={() => filtrarPorLetra(null)}
               >
                 <ThemedText style={styles.texto3}>← Voltar</ThemedText>
@@ -231,6 +215,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 25,
     fontFamily: 'Itim',
+    fontWeight: 'bold',
   },
   containerFiltroAtivo: {
     alignItems: 'center',
@@ -238,7 +223,7 @@ const styles = StyleSheet.create({
   botaoVoltar: {
     padding: 10,
     borderRadius: 8,
-    width: 200,
+    width: 300,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#000',
@@ -256,5 +241,5 @@ const styles = StyleSheet.create({
     borderColor: '#333',
     borderWidth: 1,
     width: '100%',
-  }
+  },
 });
