@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const db = require('./database.js');
@@ -9,7 +8,7 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Rota dinâmica usando parâmetro (recomendada para simplificar todas as turmas)
+// Rota para buscar alunos por turma
 app.get('/api/alunos/:turma', (req, res) => {
   const turmaParam = req.params.turma.toUpperCase(); // Ex: "3A" ou "3B"
  
@@ -20,6 +19,11 @@ app.get('/api/alunos/:turma', (req, res) => {
   alunosTurma.sort((a, b) => a.nome.localeCompare(b.nome));
  
   res.json(alunosTurma);
+});
+
+// Nova rota para buscar todos os registros ou filtrar por aluno
+app.get('/api/registros', (req, res) => {
+  res.json(db.registros);
 });
 
 app.listen(PORT, () => {
