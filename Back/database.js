@@ -33,10 +33,22 @@ const database = {
   ],
 
   registros: [
-    { id_aluno: 1, data: "2026-04-27", status: "Presença", id_tipo: 1 },
-    { id_aluno: 1, data: "2026-04-28", status: "Falta", id_tipo: 0 },
-    { id_aluno: 3, data: "2026-04-27", status: "Presença", id_tipo: 1 },
-    { id_aluno: 3, data: "2026-04-28", status: "Presença", id_tipo: 1 }
+      { id_aluno: 1, status: "Presença", id_tipo: 1 },
+    { id_aluno: 1, status: "Falta", id_tipo: 0 },
+    { id_aluno: 3, status: "Presença", id_tipo: 1 },
+    { id_aluno: 3, status: "Presença", id_tipo: 1 },
+   
+    // Novos registros de faltas/presenças para os outros alunos
+    { id_aluno: 6, status: "Falta", id_tipo: 0 },
+    { id_aluno: 6, status: "Presença", id_tipo: 1 },
+    { id_aluno: 7, status: "Falta", id_tipo: 0 },
+    { id_aluno: 7, status: "Presença", id_tipo: 1 },
+    { id_aluno: 8, status: "Falta", id_tipo: 0 },
+    { id_aluno: 9, status: "Falta", id_tipo: 0 },
+    { id_aluno: 10, status: "Presença", id_tipo: 1 },
+    { id_aluno: 11, status: "Falta", id_tipo: 0 },
+    { id_aluno: 12, status: "Presença", id_tipo: 1 },
+    { id_aluno: 16, status: "Falta", id_tipo: 0 }
   ]
 };
 
