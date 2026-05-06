@@ -1,76 +1,118 @@
-import React, { useState } from 'react'; 
-import { Platform, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Platform, StyleSheet, ScrollView, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 
+// URL base do seu servidor (use o IP da sua máquina local ou localhost no emulador/navegador)
+const API_URL = 'http://localhost:3000';
+
+interface Aluno {
+  id: number;
+  nome: string;
+  id_turma: string;
+}
+
 export default function HomeScreen() {
-    // Estado para controlar qual card está aberto começa como 'null' (todos fechados).
-  const [cardAberto, setCardAberto] = useState<number | null>(null);  // seta a propriedade do card aberto e da o estado nulo
+  const [cardAberto, setCardAberto] = useState<number | null>(null);
+  const [alunos, setAlunos] = useState<Aluno[]>([]);
+  const [registros, setRegistros] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  // Carrega os dados do servidor quando o componente monta
+  useEffect(() => {
+    async function carregarDados() {
+      try {
+        // Busca alunos da turma 3A
+        const responseAlunos = await fetch(`${API_URL}/api/alunos/3A`);
+        const alunosData = await responseAlunos.json();
+        setAlunos(alunosData);
 
-  // Função para abrir/fechar
+        // Busca os registros
+        const responseRegistros = await fetch(`${API_URL}/api/registros`);
+        const registrosData = await responseRegistros.json();
+        setRegistros(registrosData);
+      } catch (error) {
+        console.error('Erro ao conectar com a API:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    carregarDados();
+  }, []);
+
   const alternarCard = (id: number) => {
     if (cardAberto === id) {
-      setCardAberto(null);  // Se clicar no que já está aberto, ele fecha
-
+      setCardAberto(null);
     } else {
-      setCardAberto(id);  // Abre o card clicado
-
+      setCardAberto(id);
     }
   };
 
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#000000" />
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.container}>
-
       <View style={styles.centralizarHeader}>
         <ThemedText style={styles.texto}>
           3°A
         </ThemedText>
       </View>
 
-  <View style={styles.subsub}>
+      <View style={styles.subsub}>
         <ThemedText style={styles.subsubtexto}>
-          Resultados encontrados:
+          Resultados encontrados: {alunos.length}
         </ThemedText>
       </View>
      
-     
-      <View style={styles.quadrado}>
-        <TouchableOpacity // botao
-          activeOpacity={0.9} 
-          onPress={() => alternarCard(1)} // quando vc clicka ele pucha o valor do id "1"
-
-          style={[styles.oquadrado1, cardAberto === 1 && styles.cardExpandido]}
-        >
-          <ThemedText style={styles.aluno1}>Allan Cordeiro</ThemedText>
-       
-          {cardAberto === 1 && <ConteudoStatus />}
-        </TouchableOpacity>
-      </View>
-     
-      
-   
-      
-   
-      
+      {/* Mapeamento dinâmico dos alunos */}
+      {alunos.map((aluno) => (
+        <View style={styles.quadrado} key={aluno.id}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => alternarCard(aluno.id)}
+            style={[styles.oquadrado1, cardAberto === aluno.id && styles.cardExpandido]}
+          >
+            <ThemedText style={styles.aluno1}>{aluno.nome}</ThemedText>
+         
+            {cardAberto === aluno.id && (
+              <ConteudoStatus idAluno={aluno.id} registrosGlobais={registros} />
+            )}
+          </TouchableOpacity>
+        </View>
+      ))}
 
     </ScrollView>
   );
 }
-// componente interno para não repetir o código das bolinhas 4 vezes
-const ConteudoStatus = () => (
-  <View style={styles.containerStatus}>
-    <ThemedText style={styles.labelStatus}>status</ThemedText>
-    <View style={styles.linhaStatus}>
-      <View style={[styles.circulo, { backgroundColor: '#FF5F5F' }]} />
-      <ThemedText style={styles.textoStatus}>13 faltas</ThemedText>
+
+// Componente modificado para receber os registros via props
+const ConteudoStatus = ({ idAluno, registrosGlobais }: { idAluno: number, registrosGlobais: any[] }) => {
+  const registros = registrosGlobais.filter((r: any) => r.id_aluno === idAluno);
+
+  const faltas = registros.filter((r: any) => r.status === "Falta").length;
+  const presencas = registros.filter((r: any) => r.status === "Presença").length;
+
+  return (
+    <View style={styles.containerStatus}>
+      <ThemedText style={styles.labelStatus}>status</ThemedText>
+      <View style={styles.linhaStatus}>
+        <View style={[styles.circulo, { backgroundColor: '#FF5F5F' }]} />
+        <ThemedText style={styles.textoStatus}>{faltas} faltas</ThemedText>
+      </View>
+      <View style={styles.linhaStatus}>
+        <View style={[styles.circulo, { backgroundColor: '#00995E' }]} />
+        <ThemedText style={styles.textoStatus}>{presencas} presenças</ThemedText>
+      </View>
     </View>
-    <View style={styles.linhaStatus}>
-      <View style={[styles.circulo, { backgroundColor: '#00995E' }]} />
-      <ThemedText style={styles.textoStatus}>200 presenças</ThemedText>
-    </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -78,28 +120,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     color: '#000000',
   },
-  centralizarHeader: { 
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  centralizarHeader: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-
   },
   texto: {
     color: '#000000',
     fontSize: 50,
   },
- subsub: { 
+  subsub: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-
   },
   subsubtexto: {
-    color: '#000000',
-    fontSize: 20,
-  },
- 
-  texto2: {
     color: '#000000',
     fontSize: 20,
   },
@@ -107,8 +147,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
-  
-     
   },
   aluno1: {
     textAlign: 'center',
@@ -116,7 +154,6 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 20,
   },
- 
   cardExpandido: {
     height: 300,
     width: 300,
@@ -125,7 +162,6 @@ const styles = StyleSheet.create({
   containerStatus: {
     alignItems: 'center',
     marginTop: 10,
-    
   },
   labelStatus: {
     fontSize: 18,
