@@ -23,6 +23,7 @@ export default function TurmaScreen() {
   // Armazena qual letra/filtro está ativo no momento ('A', 'B', 'C', 'D' ou null para mostrar todos os botões)
   const [filtroAtivo, setFiltroAtivo] = useState<string | null>(null);
 
+
   useEffect(() => {
     async function carregarDados() {
       try {
@@ -215,7 +216,6 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 25,
     fontFamily: 'Itim',
-    fontWeight: 'bold',
   },
   containerFiltroAtivo: {
     alignItems: 'center',

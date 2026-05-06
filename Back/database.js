@@ -11,11 +11,25 @@ const database = {
     { id: 3, nome: "Christopher Whaither", id_turma: "3A" },
     { id: 4, nome: "Giovanna Gabrielly", id_turma: "3A" },
     { id: 5, nome: "Maykon da Costa", id_turma: "3A" },
-    { id: 6, nome: "Malévola Menezes", id_turma: "3B" },
-    { id: 7, nome: "Soso Careca", id_turma: "3B" },
-    { id: 8, nome: "Mc Paiva", id_turma: "3B" },
-    { id: 9, nome: "Rayanne Puglyesi", id_turma: "3B" },
-    { id: 10, nome: "Dittle Toddy", id_turma: "3B" }
+
+    { id: 6, nome: "Alanzoka Nextage", id_turma: "3B" },
+    { id: 7, nome: "Bit Bolando ", id_turma: "3B" },
+    { id: 8, nome: "Cap Capuccino", id_turma: "3B" },
+    { id: 9, nome: "Dino Dad", id_turma: "3B" },
+    { id: 10, nome: "Calango Calanguinho", id_turma: "3B" },
+
+    { id: 11, nome: "Ana Paula Renault", id_turma: "3C" },
+    { id: 12, nome: "Bob God God", id_turma: "3C" },
+    { id: 13, nome: "Claudio Mario", id_turma: "3C" },
+    { id: 14, nome: "Dilma Ruself", id_turma: "3C" },
+    { id: 15, nome: "Babu Messias", id_turma: "3C" },
+
+    { id: 16, nome: "Anais Fundos", id_turma: "3D" },
+    { id: 17, nome: "Byoncé Medeiros", id_turma: "3D" },
+    { id: 18, nome: "Clarisse Lispector", id_turma: "3D" },
+    { id: 19, nome: "Diana Princess", id_turma: "3D" },
+    { id: 20, nome: "Carpinteira Sabrina", id_turma: "3D" }
+
   ],
 
   registros: [
