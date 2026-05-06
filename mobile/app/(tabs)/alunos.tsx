@@ -28,11 +28,12 @@ export default function HomeScreen() {
         </ThemedText>
       </View>
 
-      <View style={styles.contralizarsubtitulo}>
-        <ThemedText style={styles.texto2}>
-          4 resultados encontrados - A
+  <View style={styles.subsub}>
+        <ThemedText style={styles.subsubtexto}>
+          Resultados encontrados:
         </ThemedText>
       </View>
+     
      
       <View style={styles.quadrado}>
         <TouchableOpacity // botao
@@ -41,43 +42,17 @@ export default function HomeScreen() {
 
           style={[styles.oquadrado1, cardAberto === 1 && styles.cardExpandido]}
         >
-          <ThemedText style={styles.aluno1}>Angelina dos anjos</ThemedText>
+          <ThemedText style={styles.aluno1}>Allan Cordeiro</ThemedText>
+       
           {cardAberto === 1 && <ConteudoStatus />}
         </TouchableOpacity>
       </View>
      
-      <View style={styles.quadrado}>
-        <TouchableOpacity // botao
-          activeOpacity={0.9} 
-          onPress={() => alternarCard(2)}  // quando vc clicka ele pucha o valor do id "2"
-          style={[styles.oquadrado2, cardAberto === 2 && styles.cardExpandido]}
-        >
-          <ThemedText style={styles.aluno1}>Eve albuquerque santos</ThemedText>
-          {cardAberto === 2 && <ConteudoStatus />}
-        </TouchableOpacity>
-      </View>
+      
    
-      <View style={styles.quadrado}>
-        <TouchableOpacity // botao
-          activeOpacity={0.9}
-          onPress={() => alternarCard(3)}   // quando vc clicka ele pucha o valor do id "3"
-          style={[styles.oquadrado3, cardAberto === 3 && styles.cardExpandido]}
-        >
-          <ThemedText style={styles.aluno1}>Kali silva barreto</ThemedText>
-          {cardAberto === 3 && <ConteudoStatus />}
-        </TouchableOpacity>
-      </View>
+      
    
-      <View style={styles.quadrado}>
-        <TouchableOpacity // botao
-          activeOpacity={0.9} 
-          onPress={() => alternarCard(4)}  // quando vc clicka ele pucha o valor do id "4"
-          style={[styles.oquadrado4, cardAberto === 4 && styles.cardExpandido]}
-        >
-          <ThemedText style={styles.aluno1}>Kate silva barreto</ThemedText>
-          {cardAberto === 4 && <ConteudoStatus />}
-        </TouchableOpacity>
-      </View>
+      
 
     </ScrollView>
   );
@@ -113,11 +88,17 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 50,
   },
-  contralizarsubtitulo: {
-    marginTop: 20,
+ subsub: { 
+    justifyContent: 'center',
     alignItems: 'center',
-    
+    marginTop: 20,
+
   },
+  subsubtexto: {
+    color: '#000000',
+    fontSize: 20,
+  },
+ 
   texto2: {
     color: '#000000',
     fontSize: 20,
@@ -125,7 +106,9 @@ const styles = StyleSheet.create({
   quadrado: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 40,
+  
+     
   },
   aluno1: {
     textAlign: 'center',
@@ -133,8 +116,10 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 20,
   },
+ 
   cardExpandido: {
-    height: 'auto',
+    height: 300,
+    width: 300,
     paddingBottom: 25,
   },
   containerStatus: {
@@ -171,31 +156,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderWidth: 2,
     borderColor: '#000',
-    backgroundColor: '#FB7DA8'
-  },
-  oquadrado2: {
-    width: 300,
-    height: 120,
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: '#000',
-    backgroundColor: '#00995E'
-  },
-  oquadrado3: {
-    width: 300,
-    height: 120,
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: '#000',
-    backgroundColor: '#058CD7'
-  },
-  oquadrado4: {
-    width: 300,
-    height: 120,
-    borderRadius: 15,
-    backgroundColor: '#FFC567',
-    borderWidth: 2,
-    borderColor: '#000',
-  },
-
+    backgroundColor: '#FB7DA8',
+  }
 });
