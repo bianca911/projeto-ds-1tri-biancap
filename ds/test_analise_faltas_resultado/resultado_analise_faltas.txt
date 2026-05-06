@@ -1,0 +1,11 @@
+Relatório: Alunos com faltas acima ou igual a 20
+
+1. Nome: Maykon da Costa | Turma: 3A
+   Faltas: 25 | Presenças: 175
+
+2. Nome: Claudio Mario | Turma: 3C
+   Faltas: 22 | Presenças: 178
+
+3. Nome: Dilma Ruself | Turma: 3C
+   Faltas: 20 | Presenças: 180
+

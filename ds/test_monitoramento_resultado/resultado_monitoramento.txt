@@ -1,0 +1,62 @@
+Relatório de Monitoramento: Faltas e Presenças
+
+1. Nome: Allan Cordeiro | Turma: 3A
+   Faltas: 5 | Presenças: 195
+
+2. Nome: Bianca Moreira | Turma: 3A
+   Faltas: 12 | Presenças: 188
+
+3. Nome: Christopher Whaither | Turma: 3A
+   Faltas: 2 | Presenças: 198
+
+4. Nome: Giovanna Gabrielly | Turma: 3A
+   Faltas: 0 | Presenças: 200
+
+5. Nome: Maykon da Costa | Turma: 3A
+   Faltas: 25 | Presenças: 175
+
+6. Nome: Alanzoka Nextage | Turma: 3B
+   Faltas: 8 | Presenças: 192
+
+7. Nome: Bit Bolando | Turma: 3B
+   Faltas: 10 | Presenças: 190
+
+8. Nome: Cap Capuccino | Turma: 3B
+   Faltas: 3 | Presenças: 197
+
+9. Nome: Dino Dad | Turma: 3B
+   Faltas: 15 | Presenças: 185
+
+10. Nome: Calango Calanguinho | Turma: 3B
+   Faltas: 7 | Presenças: 193
+
+11. Nome: Ana Paula Renault | Turma: 3C
+   Faltas: 4 | Presenças: 196
+
+12. Nome: Bob God God | Turma: 3C
+   Faltas: 6 | Presenças: 194
+
+13. Nome: Claudio Mario | Turma: 3C
+   Faltas: 20 | Presenças: 180
+
+14. Nome: Dilma Ruself | Turma: 3C
+   Faltas: 18 | Presenças: 182
+
+15. Nome: Babu Messias | Turma: 3C
+   Faltas: 1 | Presenças: 199
+
+16. Nome: Anais Fundos | Turma: 3D
+   Faltas: 0 | Presenças: 200
+
+17. Nome: Byoncé Medeiros | Turma: 3D
+   Faltas: 9 | Presenças: 191
+
+18. Nome: Clarisse Lispector | Turma: 3D
+   Faltas: 11 | Presenças: 189
+
+19. Nome: Diana Princess | Turma: 3D
+   Faltas: 5 | Presenças: 195
+
+20. Nome: Carpinteira Sabrina | Turma: 3D
+   Faltas: 14 | Presenças: 186
+
