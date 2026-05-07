@@ -3,6 +3,7 @@ import os
 def test_ordem_faltas_presencas():
     
     alunos = [
+        
         {"nome": "Allan Cordeiro", "turma": "3A", "faltas": 5, "presencas": 195},
         {"nome": "Bianca Moreira", "turma": "3A", "faltas": 12, "presencas": 188},
         {"nome": "Christopher Whaither", "turma": "3A", "faltas": 2, "presencas": 198},
