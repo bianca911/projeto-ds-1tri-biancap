@@ -3,7 +3,6 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
@@ -12,7 +11,7 @@ import { useLocalSearchParams } from 'expo-router';
 const API_URL = 'http://localhost:3000';
 
 export default function AlunoDetalhesScreen() {
-  const { id } = useLocalSearchParams(); // Captura o ID vindo da página anterior
+  const { id } = useLocalSearchParams();
   const [aluno, setAluno] = useState<any>(null);
   const [registros, setRegistros] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,20 +21,20 @@ export default function AlunoDetalhesScreen() {
       try {
         setLoading(true);
 
-        // 1. Busca os registros de frequência
+        // 1. Busca os registros de frequência (Global)
         const responseReg = await fetch(`${API_URL}/api/registros`);
         const todosRegistros = await responseReg.json();
 
-        // Filtra os registros apenas deste aluno
         const registrosFiltrados = todosRegistros.filter(
           (r: any) => r.id_aluno === Number(id)
         );
         setRegistros(registrosFiltrados);
 
-        // 2. Busca a lista de alunos para encontrar o nome pelo ID
-        // Note: Se o aluno for de outra turma (ex: 3B), o fetch fixo em '3A' pode falhar.
-        const responseAlunos = await fetch(`${API_URL}/api/alunos/3A`);
+        // 2. Busca a lista de TODOS os alunos (de todas as turmas)
+        // Alterado de /api/alunos/3A para /api/alunos
+        const responseAlunos = await fetch(`${API_URL}/api/alunos`);
         const listaAlunos = await responseAlunos.json();
+       
         const alunoEncontrado = listaAlunos.find(
           (a: any) => a.id === Number(id)
         );
@@ -66,6 +65,11 @@ export default function AlunoDetalhesScreen() {
         <ThemedText style={styles.textoNome}>
           {aluno ? aluno.nome : 'Aluno não encontrado'}
         </ThemedText>
+        {aluno && (
+          <ThemedText style={styles.textoTurma}>
+            Turma: {aluno.id_turma}
+          </ThemedText>
+        )}
       </View>
 
       <View style={styles.quadrado}>
@@ -107,6 +111,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  textoTurma: {
+    fontSize: 18,
+    color: '#666',
+    marginTop: 5,
   },
   quadrado: {
     alignItems: 'center',
