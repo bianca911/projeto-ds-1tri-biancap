@@ -62,7 +62,7 @@ export default function AlunoDetalhesScreen() {
   const presencas = registros.filter((r) => r.status === 'Presença').length;
 
   return (
-    <View style={{ flex: 1 }}> {/* envolvi tudo em View para colocar o botão acima */}
+    <View style={styles.container1} > {/* envolvi tudo em View para colocar o botão acima */}
       {/* Botão para voltar */}
       <TouchableOpacity
         style={styles.botaoVoltarGeral}
@@ -70,7 +70,7 @@ export default function AlunoDetalhesScreen() {
           router.replace('/turma'); // sempre vai para Turmas
         }}
       >
-        <ThemedText style={styles.texto3}>← Selecionar outra Turma</ThemedText>
+        <ThemedText style={styles.texto3}>← Selecionar outro aluno</ThemedText>
       </TouchableOpacity>
 
       <ScrollView style={styles.container}>
@@ -112,6 +112,10 @@ export default function AlunoDetalhesScreen() {
 }
 
 const styles = StyleSheet.create({
+  container1: {
+    backgroundColor: '#fff',
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
@@ -172,12 +176,16 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   botaoVoltarGeral: {
-    padding: 10,
     marginTop: 20,
-    marginLeft: 15,
+    marginLeft: 20,
+    padding: 10,
+    alignSelf: 'flex-start',
+    backgroundColor: '#fff',
   },
   texto3: {
     fontSize: 18,
-    color: '#FB7DA8',
+    color: '#000000',
+     backgroundColor: '#fff',
+     fontFamily: 'Itim',
   },
 });
