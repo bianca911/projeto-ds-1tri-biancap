@@ -48,9 +48,12 @@ export default function TurmaScreen() {
     setFiltroAtivo(letra);
   };
 
-  const handlePress = (nomeAluno: string) => {
-    console.log(`Você clicou em: ${nomeAluno}`);
-    router.push('/alunos');
+  const handlePress = (idAluno: number) => {
+    console.log(`Navegando para o aluno ID: ${idAluno}`);
+    router.push({
+      pathname: '/alunos',
+      params: { id: idAluno}
+      });
   };
 
   // Obtém a lista filtrada de acordo com o estado atual
@@ -146,7 +149,7 @@ export default function TurmaScreen() {
                       <TouchableOpacity
                         key={aluno.id}
                         style={styles.itemAluno}
-                        onPress={() => handlePress(aluno.nome)}
+                        onPress={() => handlePress(aluno.id)}
                       >
                         <ThemedText style={styles.texto3}>{aluno.nome}</ThemedText>
                       </TouchableOpacity>

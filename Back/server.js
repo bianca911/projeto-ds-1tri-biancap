@@ -26,6 +26,10 @@ app.get('/api/registros', (req, res) => {
   res.json(db.registros);
 });
 
+app.get('/api/alunos', (req, res) => {
+  res.json(db.alunos);
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
