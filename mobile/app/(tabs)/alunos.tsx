@@ -4,13 +4,15 @@ import {
   ScrollView,
   View,
   ActivityIndicator,
+  TouchableOpacity, // adicionado
 } from 'react-native';
 import { ThemedText } from '@/components/themed-text';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router'; // adicionado useRouter
 
 const API_URL = 'http://localhost:3000';
 
 export default function AlunoDetalhesScreen() {
+  const router = useRouter(); // adicionado
   const { id } = useLocalSearchParams();
   const [aluno, setAluno] = useState<any>(null);
   const [registros, setRegistros] = useState<any[]>([]);
@@ -60,40 +62,52 @@ export default function AlunoDetalhesScreen() {
   const presencas = registros.filter((r) => r.status === 'Presença').length;
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.centralizarHeader}>
-        <ThemedText style={styles.textoNome}>
-          {aluno ? aluno.nome : 'Aluno não encontrado'}
-        </ThemedText>
-        {aluno && (
-          <ThemedText style={styles.textoTurma}>
-            Turma: {aluno.id_turma}
+    <View style={{ flex: 1 }}> {/* envolvi tudo em View para colocar o botão acima */}
+      {/* Botão para voltar */}
+      <TouchableOpacity
+        style={styles.botaoVoltarGeral}
+        onPress={() => {
+          router.replace('/turmas'); // sempre vai para Turmas
+        }}
+      >
+        <ThemedText style={styles.texto3}>← Selecionar outra Turma</ThemedText>
+      </TouchableOpacity>
+
+      <ScrollView style={styles.container}>
+        <View style={styles.centralizarHeader}>
+          <ThemedText style={styles.textoNome}>
+            {aluno ? aluno.nome : 'Aluno não encontrado'}
           </ThemedText>
-        )}
-      </View>
+          {aluno && (
+            <ThemedText style={styles.textoTurma}>
+              Turma: {aluno.id_turma}
+            </ThemedText>
+          )}
+        </View>
 
-      <View style={styles.quadrado}>
-        <View style={styles.oquadrado1}>
-          <ThemedText style={styles.labelStatus}>Status de Frequência</ThemedText>
+        <View style={styles.quadrado}>
+          <View style={styles.oquadrado1}>
+            <ThemedText style={styles.labelStatus}>Status de Frequência</ThemedText>
 
-          <View style={styles.containerStatus}>
-            <View style={styles.linhaStatus}>
-              <View style={[styles.circulo, { backgroundColor: '#FF5F5F' }]} />
-              <ThemedText style={styles.textoStatus}>
-                {faltas} {faltas === 1 ? 'falta' : 'faltas'}
-              </ThemedText>
-            </View>
+            <View style={styles.containerStatus}>
+              <View style={styles.linhaStatus}>
+                <View style={[styles.circulo, { backgroundColor: '#FF5F5F' }]} />
+                <ThemedText style={styles.textoStatus}>
+                  {faltas} {faltas === 1 ? 'falta' : 'faltas'}
+                </ThemedText>
+              </View>
 
-            <View style={styles.linhaStatus}>
-              <View style={[styles.circulo, { backgroundColor: '#00995E' }]} />
-              <ThemedText style={styles.textoStatus}>
-                {presencas} {presencas === 1 ? 'presença' : 'presenças'}
-              </ThemedText>
+              <View style={styles.linhaStatus}>
+                <View style={[styles.circulo, { backgroundColor: '#00995E' }]} />
+                <ThemedText style={styles.textoStatus}>
+                  {presencas} {presencas === 1 ? 'presença' : 'presenças'}
+                </ThemedText>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -156,5 +170,14 @@ const styles = StyleSheet.create({
   textoStatus: {
     fontSize: 20,
     color: '#000',
+  },
+  botaoVoltarGeral: {
+    padding: 10,
+    marginTop: 20,
+    marginLeft: 15,
+  },
+  texto3: {
+    fontSize: 18,
+    color: '#FB7DA8',
   },
 });
