@@ -67,7 +67,7 @@ export default function AlunoDetalhesScreen() {
       <TouchableOpacity
         style={styles.botaoVoltarGeral}
         onPress={() => {
-          router.replace('/turmas'); // sempre vai para Turmas
+          router.replace('/turma'); // sempre vai para Turmas
         }}
       >
         <ThemedText style={styles.texto3}>← Selecionar outra Turma</ThemedText>
