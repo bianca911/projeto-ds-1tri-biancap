@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
@@ -20,13 +26,13 @@ export default function TurmaScreen() {
   const [totalAlunos, setTotalAlunos] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Armazena qual letra/filtro está ativo no momento ('A', 'B', 'C', 'D' ou null para mostrar todos os botões)
+  // Filtro ativo ('A', 'B', 'C', 'D' ou null)
   const [filtroAtivo, setFiltroAtivo] = useState<string | null>(null);
-
 
   useEffect(() => {
     async function carregarDados() {
       try {
+        setLoading(true);
         // Conexão com o backend utilizando Express
         const response = await fetch(`http://localhost:3000/api/alunos/${turmaSelecionada}`);
         const data = await response.json();
@@ -43,48 +49,56 @@ export default function TurmaScreen() {
     carregarDados();
   }, [turmaSelecionada]);
 
-  // Função para filtrar os alunos com base na letra escolhida
   const filtrarPorLetra = (letra: string | null) => {
     setFiltroAtivo(letra);
   };
 
   const handlePress = (idAluno: number) => {
-    console.log(`Navegando para o aluno ID: ${idAluno}`);
     router.push({
       pathname: '/alunos',
-      params: { id: idAluno}
-      });
+      params: { id: idAluno }
+    });
   };
 
   // Obtém a lista filtrada de acordo com o estado atual
   const alunosExibidos = filtroAtivo
     ? todosAlunosBase
-        .filter(aluno => aluno.nome.toUpperCase().startsWith(filtroAtivo))
-        .sort((a, b) => a.nome.localeCompare(b.nome))
+      .filter(aluno => aluno.nome.toUpperCase().startsWith(filtroAtivo))
+      .sort((a, b) => a.nome.localeCompare(b.nome))
     : [];
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.centralizarporra}>
+      {/* 1. Botão para voltar para a tela de TURMAS (SELECIONE A TURMA) */}
+      <TouchableOpacity
+        style={styles.botaoVoltarGeral}
+        onPress={() => {
+          router.push('/turmas');
+        }}
+      >
+        <ThemedText style={styles.texto3}>← Selecionar outra Turma</ThemedText>
+      </TouchableOpacity>
+
+      <View style={styles.centralizarHeader}>
         <ThemedText style={styles.texto}>
           {turmaSelecionada}
         </ThemedText>
       </View>
 
-      <View style={styles.centralizar2}>
+      <View style={styles.centralizarSub}>
         <ThemedText style={styles.texto2}>
           {totalAlunos} resultados encontrados
         </ThemedText>
       </View>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 50 }} />
       ) : (
         <View style={{ marginTop: 20, marginBottom: 40 }}>
-         
-          {/* Se nenhum filtro estiver ativo, mostra todos os botões de categorias */}
+
+          {/* Se nenhum filtro estiver ativo, mostra os botões de categorias */}
           {filtroAtivo === null && (
-            <>
+            <View style={{ alignItems: 'center' }}>
               <TouchableOpacity
                 style={styles.quadrado}
                 activeOpacity={0.7}
@@ -124,25 +138,25 @@ export default function TurmaScreen() {
                   <ThemedText style={styles.texto5}>ALUNOS D</ThemedText>
                 </View>
               </TouchableOpacity>
-            </>
+            </View>
           )}
 
-          {/* Se um filtro estiver ativo, mostra apenas o botão correspondente e os itens dentro dele */}
+          {/* Se um filtro estiver ativo, mostra os itens dentro dele */}
           {filtroAtivo !== null && (
             <View style={styles.containerFiltroAtivo}>
-             
-              {/* Botão de voltar para a tela inicial dos botões */}
               <TouchableOpacity
-                style={[styles.botaoVoltar, { backgroundColor: '#e0e0e0', marginBottom: 20 }]}
+                style={[styles.botaoVoltarFiltro, { backgroundColor: '#e0e0e0', marginBottom: 20 }]}
                 onPress={() => filtrarPorLetra(null)}
               >
-                <ThemedText style={styles.texto3}>← Voltar</ThemedText>
+                <ThemedText style={styles.texto3}>← Voltar para Categorias</ThemedText>
               </TouchableOpacity>
 
-              <View style={[styles.oquadrado, { backgroundColor: filtroAtivo === 'A' ? '#FF85A1' : filtroAtivo === 'B' ? '#FFC567' : filtroAtivo === 'C' ? '#00965F' : '#008AD7', height: 'auto', paddingVertical: 20 }]}>
+              <View style={[
+                styles.oquadradoLista,
+                { backgroundColor: filtroAtivo === 'A' ? '#FF85A1' : filtroAtivo === 'B' ? '#FFC567' : filtroAtivo === 'C' ? '#00965F' : '#008AD7' }
+              ]}>
                 <ThemedText style={styles.texto5}>ALUNOS {filtroAtivo}</ThemedText>
 
-                {/* Lista os alunos dentro do botão correspondente */}
                 <View style={styles.listaAlunosContainer}>
                   {alunosExibidos.length > 0 ? (
                     alunosExibidos.map(aluno => (
@@ -172,19 +186,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  centralizarporra: {
-    flex: 1,
+  botaoVoltarGeral: {
+    marginTop: 20,
+    marginLeft: 20,
+    padding: 10,
+    alignSelf: 'flex-start',
+  },
+  centralizarHeader: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
   texto: {
     color: '#000',
     fontSize: 40,
     fontFamily: 'Itim',
   },
-  centralizar2: {
-    flex: 1,
+  centralizarSub: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
@@ -196,13 +214,21 @@ const styles = StyleSheet.create({
   },
   oquadrado: {
     width: 300,
+    height: 120,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: '#000',
-    paddingVertical: 30,
-    height: 120,
+  },
+  oquadradoLista: {
+    width: 300,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#000',
+    paddingVertical: 20,
   },
   quadrado: {
     justifyContent: 'center',
@@ -211,7 +237,7 @@ const styles = StyleSheet.create({
   },
   texto3: {
     color: '#000',
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: 'Itim',
     textAlign: 'center',
   },
@@ -223,7 +249,7 @@ const styles = StyleSheet.create({
   containerFiltroAtivo: {
     alignItems: 'center',
   },
-  botaoVoltar: {
+  botaoVoltarFiltro: {
     padding: 10,
     borderRadius: 8,
     width: 300,
